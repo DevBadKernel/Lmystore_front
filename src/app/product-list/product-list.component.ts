@@ -46,7 +46,7 @@ export class ProductListComponent {
   }
 
   deleteProduct(index:number):void{
-    this.productService.deleteProduct(this.products[index]._id).subscribe(result=>{
+    this.productService.deleteProduct(this.products[index].id).subscribe(result=>{
 
       if(result){
         this.getProducts();
