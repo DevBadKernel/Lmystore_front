@@ -4,7 +4,7 @@
 <div class="container-products" *ngFor="let product of products;let i = index">
     
     <h3>
-        <a [title]="product.name + ' details'">
+        <a [title]="product.name" (click)="editProduct(i)">
         {{product.name}}
         </a>
     </h3>
@@ -17,17 +17,28 @@
         </p>
     
     <div class="delete-btn">
-        <button type="button" (click)="deleteProduct(i)">X</button>
+        <button type="button" (click)="deleteProduct(i)">Delete</button>
     </div>
     
 </div>
-<div class="add-container">
+<div class="add-container" *ngIf="showAdd">
     <form [formGroup]="productForm" (ngSubmit)="add();">
         <input type="text" formControlName="name" placeholder="Introdueix un producte">
         <input type="number" formControlName="price" placeholder="Introdueix un preu">
         <input type="text" formControlName="description" placeholder="Introdueix una descripció">
         <button class="add-btn" type="submit">
             Add
+        </button>
+    </form>
+</div>
+
+<div class="add-container" *ngIf="showEdit">
+    <form [formGroup]="productForm" (ngSubmit)="modify();">
+        <input type="text" formControlName="name" placeholder="Modifica un producte">
+        <input type="number" formControlName="price" placeholder="Modifica un preu">
+        <input type="text" formControlName="description" placeholder="Modifica una descripció">
+        <button class="add-btn" type="submit">
+            Modify
         </button>
     </form>
 </div>

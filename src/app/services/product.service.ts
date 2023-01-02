@@ -11,6 +11,7 @@ export class ProductService {
   private url = 'http://localhost:8000/api/get_products';
   private urlpost = 'http://localhost:8000/api/add_product';
   private urldelete = 'http://localhost:8000/api/delete_product';
+  private urlput = 'http://localhost:8000/api/update_product';
   constructor(private httpClient:HttpClient) { }
 
   getProducts():Observable<Product[]>{
@@ -24,12 +25,16 @@ export class ProductService {
     return this.httpClient.post(this.urlpost,data,{observe:'body'}).pipe(catchError(this.handleError<any>('addNewProduct')));
   }
 
+  updateProduct(id:string,name:string,description:string,price:number):Observable<object>{
+    return this.httpClient.put(this.urlput+"/"+id,{name:name,description:description,price:price},{observe:'response'}).pipe(catchError(this.handleError<any>('updateProduct')));
+  }
+
   deleteProduct(id:string):Observable<object>{
 
     return this.httpClient.delete(this.urldelete+'/'+id,{observe:'body'}).pipe(catchError(this.handleError<any>('deleteProduct')))
   }
 
-  private handleError<T>(operation = 'opearation',result?:T){
+  private handleError<T>(operation = 'operation',result?:T){
     return (error:any):Observable<T>=>{
       // TODO: send the error to remote logging infrastructure
       console.error(error);// log to console instead
